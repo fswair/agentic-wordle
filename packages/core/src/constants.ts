@@ -3,7 +3,7 @@ export const MIN_LENGTH = 4;
 export const MAX_LENGTH = 12;
 export const MAX_GUESSES = 6;
 /** Public address of the deployed site. Used in shared results. */
-export const SITE_URL = "https://agentic-wordle.swair.workers.dev";
+export const SITE_URL = "https://agentic-wordle.tomris.dev";
 
 export const USERNAME_MIN = 3;
 export const USERNAME_MAX = 20;

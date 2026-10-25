@@ -2,6 +2,8 @@
   "name": "agentic-wordle",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
+  // Cloudflare creates the DNS record and certificate for this hostname on deploy.
+  "routes": [{ "pattern": "agentic-wordle.tomris.dev", "custom_domain": true }],
   // The answer lists are private and live outside the repo's tracked files.
   "alias": { "@words": "../../private/words/index.ts" },
   "assets": {
