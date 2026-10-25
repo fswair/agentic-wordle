@@ -1,0 +1,30 @@
+{
+  "name": "agentic-wordle-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "biome check .",
+    "validate-words": "pnpm --filter @agentic-wordle/core validate-words",
+    "check": "pnpm lint && pnpm typecheck && pnpm validate-words && pnpm test",
+    "tui": "pnpm --filter agentic-wordle dev",
+    "web:dev": "pnpm --filter @agentic-wordle/web dev",
+    "web:deploy": "pnpm --filter @agentic-wordle/web deploy",
+    "add-words": "pnpm --filter @agentic-wordle/core add-words",
+    "db:local": "pnpm --filter @agentic-wordle/web db:local",
+    "db:remote": "pnpm --filter @agentic-wordle/web db:remote"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "workerd",
+      "sharp"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "typescript": "^5.6.0"
+  }
+}

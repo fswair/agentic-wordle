@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "category": "software-engineering",
+  "title": "Software Engineering",
+  "answers": [
+    {
+      "word": "BOAT",
+      "definition": "Fixture word boat used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "CAKE",
+      "definition": "Fixture word cake used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "DOOR",
+      "definition": "Fixture word door used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "FARM",
+      "definition": "Fixture word farm used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "IVORY",
+      "definition": "Fixture word ivory used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "JELLY",
+      "definition": "Fixture word jelly used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "LEMON",
+      "definition": "Fixture word lemon used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "MANGO",
+      "definition": "Fixture word mango used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "LADDER",
+      "definition": "Fixture word ladder used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "MARBLE",
+      "definition": "Fixture word marble used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "NAPKIN",
+      "definition": "Fixture word napkin used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "ORANGE",
+      "definition": "Fixture word orange used only by the test suite.",
+      "hint": "Test fixture."
+    }
+  ]
+}

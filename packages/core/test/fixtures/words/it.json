@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "category": "it",
+  "title": "IT",
+  "answers": [
+    {
+      "word": "GOLD",
+      "definition": "Fixture word gold used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "HILL",
+      "definition": "Fixture word hill used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "JAZZ",
+      "definition": "Fixture word jazz used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "KING",
+      "definition": "Fixture word king used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "NIGHT",
+      "definition": "Fixture word night used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "OCEAN",
+      "definition": "Fixture word ocean used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "PIANO",
+      "definition": "Fixture word piano used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "QUEEN",
+      "definition": "Fixture word queen used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "PENCIL",
+      "definition": "Fixture word pencil used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "QUARTZ",
+      "definition": "Fixture word quartz used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "RABBIT",
+      "definition": "Fixture word rabbit used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "SILVER",
+      "definition": "Fixture word silver used only by the test suite.",
+      "hint": "Test fixture."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "agentic-wordle",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  // The answer lists are private and live outside the repo's tracked files.
+  "alias": { "@words": "../../private/words/index.ts" },
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    // Without this, unknown paths (including /api/*) would be answered with index.html.
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "agentic-wordle",
+      // Replace with the id printed by `wrangler d1 create agentic-wordle`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

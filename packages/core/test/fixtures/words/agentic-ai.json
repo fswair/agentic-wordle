@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "category": "agentic-ai",
+  "title": "Agentic AI",
+  "answers": [
+    {
+      "word": "KITE",
+      "definition": "Fixture word kite used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "LAMP",
+      "definition": "Fixture word lamp used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "MOON",
+      "definition": "Fixture word moon used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "ROCK",
+      "definition": "Fixture word rock used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "APPLE",
+      "definition": "Fixture word apple used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "BREAD",
+      "definition": "Fixture word bread used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "CHAIR",
+      "definition": "Fixture word chair used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "DANCE",
+      "definition": "Fixture word dance used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "BRIDGE",
+      "definition": "Fixture word bridge used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "CANDLE",
+      "definition": "Fixture word candle used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "FOREST",
+      "definition": "Fixture word forest used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "GARDEN",
+      "definition": "Fixture word garden used only by the test suite.",
+      "hint": "Test fixture."
+    }
+  ]
+}

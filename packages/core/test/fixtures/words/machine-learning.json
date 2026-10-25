@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "category": "machine-learning",
+  "title": "Machine Learning",
+  "answers": [
+    {
+      "word": "SAND",
+      "definition": "Fixture word sand used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "TREE",
+      "definition": "Fixture word tree used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "WIND",
+      "definition": "Fixture word wind used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "FISH",
+      "definition": "Fixture word fish used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "EAGLE",
+      "definition": "Fixture word eagle used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "FLAME",
+      "definition": "Fixture word flame used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "GRAPE",
+      "definition": "Fixture word grape used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "HOUSE",
+      "definition": "Fixture word house used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "HAMMER",
+      "definition": "Fixture word hammer used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "ISLAND",
+      "definition": "Fixture word island used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "JUNGLE",
+      "definition": "Fixture word jungle used only by the test suite.",
+      "hint": "Test fixture."
+    },
+    {
+      "word": "KETTLE",
+      "definition": "Fixture word kettle used only by the test suite.",
+      "hint": "Test fixture."
+    }
+  ]
+}

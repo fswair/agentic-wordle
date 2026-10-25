@@ -1,0 +1,26 @@
+{
+  "name": "@agentic-wordle/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build && wrangler dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p . && tsc -p worker",
+    "test": "vitest run --passWithNoTests",
+    "deploy": "vite build && wrangler deploy",
+    "db:local": "wrangler d1 migrations apply agentic-wordle --local",
+    "db:remote": "wrangler d1 migrations apply agentic-wordle --remote"
+  },
+  "dependencies": {
+    "@agentic-wordle/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261019.1",
+    "jsdom": "^26",
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0",
+    "wrangler": "^4.0.0"
+  }
+}

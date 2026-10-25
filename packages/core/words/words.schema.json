@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agentic Wordle word list",
+  "type": "object",
+  "required": ["version", "category", "title", "answers"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "category": {
+      "enum": ["agentic-ai", "machine-learning", "software-engineering", "it"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "answers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["word", "definition"],
+        "additionalProperties": false,
+        "properties": {
+          "word": {
+            "type": "string",
+            "pattern": "^[A-Z]{4,12}$",
+            "description": "Uppercase letters, 4 to 12 of them. Each word may appear in only one category."
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Shown after the game. Explain the term in its category's context."
+          },
+          "hint": {
+            "type": "string",
+            "maxLength": 80,
+            "description": "Unlocked after three guesses. Must not contain the answer."
+          },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
