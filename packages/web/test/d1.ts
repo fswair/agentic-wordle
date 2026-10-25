@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import type { Db, Stmt } from "../worker/db.ts";
@@ -6,13 +6,17 @@ import type { Db, Stmt } from "../worker/db.ts";
 /** An in-memory SQLite database shaped like D1, with the real migration applied. */
 export function createDb(): Db {
   const sqlite = new DatabaseSync(":memory:");
-  // Tests run from several packages, so look for the migration relative to each.
-  const migration = [
-    resolve(process.cwd(), "migrations/0001_init.sql"),
-    resolve(process.cwd(), "../web/migrations/0001_init.sql"),
+  // Tests run from several packages, so look for the migrations relative to each.
+  const dir = [
+    resolve(process.cwd(), "migrations"),
+    resolve(process.cwd(), "../web/migrations"),
   ].find(existsSync);
-  if (!migration) throw new Error("migrations/0001_init.sql not found");
-  sqlite.exec(readFileSync(migration, "utf8"));
+  if (!dir) throw new Error("migrations folder not found");
+  for (const file of readdirSync(dir)
+    .filter((f) => f.endsWith(".sql"))
+    .sort()) {
+    sqlite.exec(readFileSync(resolve(dir, file), "utf8"));
+  }
 
   const stmt = (sql: string, params: unknown[]): Stmt => ({
     bind: (...values) => stmt(sql, values),

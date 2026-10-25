@@ -92,7 +92,8 @@ export type ApiErrorCode =
   | "not_in_list"
   | "hard_mode_violation"
   | "game_over"
-  | "no_words_left";
+  | "no_words_left"
+  | "rate_limited";
 
 export interface ApiError {
   error: ApiErrorCode;

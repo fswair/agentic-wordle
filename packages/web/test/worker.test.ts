@@ -14,7 +14,7 @@ import {
 } from "@agentic-wordle/core/engine";
 import { words } from "@words";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { type ApiEnv, handleApi } from "../worker/api.ts";
+import { type ApiEnv, handleApi, MAX_SIGNUPS_PER_DAY } from "../worker/api.ts";
 import { createDb } from "./d1.ts";
 
 const DAY1 = new Date("2026-10-27T12:00:00Z");
@@ -35,10 +35,11 @@ beforeEach(() => {
 async function call<T = unknown>(
   method: string,
   path: string,
-  opts: { key?: string; body?: unknown; now?: Date } = {},
+  opts: { key?: string; body?: unknown; now?: Date; ip?: string } = {},
 ): Promise<{ status: number; body: T; raw: string }> {
   const headers: Record<string, string> = { "content-type": "application/json" };
   if (opts.key) headers.authorization = `Bearer ${opts.key}`;
+  if (opts.ip) headers["cf-connecting-ip"] = opts.ip;
   const request = new Request(`https://example.test${path}`, {
     method,
     headers,
@@ -112,6 +113,53 @@ describe("accounts", () => {
     expect((await call("GET", "/api/me", { key })).status).toBe(401);
     const left = await env.DB.prepare("SELECT COUNT(*) AS n FROM games").first<{ n: number }>();
     expect(left?.n).toBe(0);
+  });
+});
+
+describe("sign-up limits", () => {
+  const register = (name: string, ip?: string, now?: Date) =>
+    call<RegisterResponse | ApiError>("POST", "/api/register", {
+      body: { username: name, timezone: "UTC" },
+      ip,
+      now,
+    });
+
+  it("allows a handful of accounts per network per day, then says to wait", async () => {
+    for (let i = 0; i < MAX_SIGNUPS_PER_DAY; i++) {
+      expect((await register(`user_${i}`, "203.0.113.7")).status).toBe(201);
+    }
+    const blocked = await register("one_too_many", "203.0.113.7");
+    expect(blocked.status).toBe(429);
+    expect((blocked.body as ApiError).error).toBe("rate_limited");
+    expect((blocked.body as ApiError).message).toContain("tomorrow");
+  });
+
+  it("counts each network separately and resets the next day", async () => {
+    for (let i = 0; i < MAX_SIGNUPS_PER_DAY; i++) await register(`a_${i}`, "198.51.100.1");
+    expect((await register("other_net", "198.51.100.2")).status).toBe(201);
+    expect((await register("tomorrow", "198.51.100.1", DAY2)).status).toBe(201);
+  });
+
+  it("does not count attempts that fail", async () => {
+    await register("taken_name", "192.0.2.9");
+    for (let i = 0; i < MAX_SIGNUPS_PER_DAY * 2; i++) await register("taken_name", "192.0.2.9");
+    for (const bad of ["ab", "has space"]) await register(bad, "192.0.2.9");
+    expect((await register("still_ok", "192.0.2.9")).status).toBe(201);
+  });
+
+  it("never stores the address itself", async () => {
+    await register("private_user", "203.0.113.55");
+    const rows = await env.DB.prepare("SELECT bucket, day, n FROM signups").all<{
+      bucket: string;
+    }>();
+    expect(rows.results).toHaveLength(1);
+    expect(JSON.stringify(rows.results)).not.toContain("203.0.113.55");
+  });
+
+  it("does not limit when there is no address, as in local development", async () => {
+    for (let i = 0; i < MAX_SIGNUPS_PER_DAY + 3; i++) {
+      expect((await register(`dev_${i}`)).status).toBe(201);
+    }
   });
 });
 

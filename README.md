@@ -73,4 +73,4 @@ Publishing the terminal app: tag a version (`v0.1.0`); the release workflow runs
 
 ## Privacy
 
-The server stores a username, a hash of the login key, the time zone, and the games played. No email, no IP logging of its own. `DELETE /api/me` (Account → Delete account) removes everything.
+The server stores a username, a hash of the login key, the time zone, and the games played. No email. To slow down bulk sign-ups it keeps a per-day counter per network (at most 5 accounts per day), labelled with a salted hash of the IP address that changes every day, so the address itself is never stored. `DELETE /api/me` (Account → Delete account) removes the account and its games.

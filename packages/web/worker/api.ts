@@ -92,7 +92,23 @@ async function playedWords(db: Db, userId: string, category: CategoryId): Promis
 
 // ---------- handlers ----------
 
-async function register(request: Request, env: ApiEnv): Promise<Response> {
+/** Accounts one network may create per day. Shared networks (a school, a company) fit well within it. */
+export const MAX_SIGNUPS_PER_DAY = 5;
+const MS_PER_DAY = 86_400_000;
+
+/** A per-day, non-reversible label for a network. Missing outside Cloudflare, where no limit applies. */
+async function signupBucket(request: Request, secret: string, day: number): Promise<string | null> {
+  const ip = request.headers.get("cf-connecting-ip");
+  if (!ip) return null;
+  const data = new TextEncoder().encode(`${ip}|${secret}|${day}`);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return [...new Uint8Array(digest)]
+    .slice(0, 16)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function register(request: Request, env: ApiEnv, now: Date): Promise<Response> {
   const body = await readJson<RegisterRequest>(request);
   const username = typeof body.username === "string" ? body.username.trim() : "";
   if (
@@ -108,6 +124,21 @@ async function register(request: Request, env: ApiEnv): Promise<Response> {
   }
   const timezone =
     typeof body.timezone === "string" && isValidTimezone(body.timezone) ? body.timezone : "UTC";
+
+  const day = Math.floor(now.getTime() / MS_PER_DAY);
+  const bucket = await signupBucket(request, env.TOKEN_SECRET, day);
+  if (bucket) {
+    const used = await env.DB.prepare("SELECT n FROM signups WHERE bucket = ?")
+      .bind(bucket)
+      .first<{ n: number }>();
+    if ((used?.n ?? 0) >= MAX_SIGNUPS_PER_DAY) {
+      return fail(
+        "rate_limited",
+        429,
+        "Too many accounts were created from this network today. Please try again tomorrow.",
+      );
+    }
+  }
 
   const taken = await env.DB.prepare("SELECT 1 AS x FROM users WHERE username_lower = ?")
     .bind(username.toLowerCase())
@@ -130,6 +161,17 @@ async function register(request: Request, env: ApiEnv): Promise<Response> {
       .run();
   } catch {
     return fail("username_taken", 409); // lost a race with another sign-up
+  }
+  if (bucket) {
+    // Only successful sign-ups count. Old counters are dropped as we go.
+    await env.DB.prepare(
+      "INSERT INTO signups (bucket, day, n) VALUES (?, ?, 1) ON CONFLICT(bucket) DO UPDATE SET n = n + 1",
+    )
+      .bind(bucket, day)
+      .run();
+    await env.DB.prepare("DELETE FROM signups WHERE day < ?")
+      .bind(day - 1)
+      .run();
   }
   return json({ username, key } satisfies RegisterResponse, 201);
 }
@@ -343,7 +385,7 @@ export async function handleApi(
   const method = request.method;
   const route = `${method} /${parts[0] ?? ""}`;
 
-  if (route === "POST /register") return register(request, env);
+  if (route === "POST /register") return register(request, env, now);
 
   // Everything below can use a key. A key that is sent but wrong is an error, not "anonymous".
   const user = await authenticate(env.DB, request);
