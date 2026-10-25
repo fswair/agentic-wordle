@@ -15,8 +15,7 @@
     {
       "binding": "DB",
       "database_name": "agentic-wordle",
-      // Replace with the id printed by `wrangler d1 create agentic-wordle`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "706514dc-5e8c-4187-b9a3-63620b846f46",
       "migrations_dir": "migrations"
     }
   ]
